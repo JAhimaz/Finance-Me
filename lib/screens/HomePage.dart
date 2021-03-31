@@ -7,11 +7,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentPushupCounter = 0;
+  double _currentBalance = 1033.45;
+  double _savingsGoal = 5000.00;
 
-  void _incrementPushups() {
+  void _spentExpense(double amount) {
     setState(() {
-      _currentPushupCounter++;
+      _currentBalance -= amount;
+    });
+  }
+
+  void _recievedExpense(double amount) {
+    setState(() {
+      _currentBalance += amount;
     });
   }
 
@@ -24,44 +31,47 @@ class _HomePageState extends State<HomePage> {
         body: Column(
           children: <Widget>[
             Container(
-                margin: EdgeInsets.only(
-                    top: (height * 0.075), left: (height * 0.03)),
-                height: height * 0.25,
-                child: Column(
-                  children: [
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                          child: Text("Current Savings",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  color: plain_text_color,
-                                  fontSize: height * 0.028)),
-                        )),
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                          margin: EdgeInsets.only(bottom: (height * 0.0025)),
-                          child: Text("RM1,033.40",
-                              style: TextStyle(
-                                  color: primary_color,
-                                  fontSize: height * 0.075)),
-                        )),
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                          child: Text("Savings Goal",
-                              style: TextStyle(
-                                  color: sub_color, fontSize: height * 0.02)),
-                        )),
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                          child: Text("RM5,000.00",
-                              style: TextStyle(
-                                  color: sub_color, fontSize: height * 0.045)),
-                        )),
-                  ],
+                height: height * 0.32,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      top: (height * 0.075), left: (height * 0.03)),
+                  child: Column(
+                    children: [
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            child: Text("Current Savings",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    color: plain_text_color,
+                                    fontSize: height * 0.028)),
+                          )),
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: (height * 0.0025)),
+                            child: Text("RM$_currentBalance",
+                                style: TextStyle(
+                                    color: primary_color,
+                                    fontSize: height * 0.075)),
+                          )),
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            child: Text("Savings Goal",
+                                style: TextStyle(
+                                    color: sub_color, fontSize: height * 0.02)),
+                          )),
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            child: Text("RM$_savingsGoal",
+                                style: TextStyle(
+                                    color: sub_color,
+                                    fontSize: height * 0.045)),
+                          )),
+                    ],
+                  ),
                 )),
             Expanded(
               flex: 4,
@@ -97,8 +107,13 @@ class _HomePageState extends State<HomePage> {
                         Container(
                             width: height * 0.1,
                             child: TextButton(
+                              style: ButtonStyle(
+                                overlayColor: MaterialStateProperty.all(
+                                    Colors.transparent),
+                              ),
                               onPressed: () {
                                 print("Add Clicked");
+                                _addExpenseModalBottom(context);
                               },
                               child: Text("+",
                                   style: TextStyle(
@@ -113,5 +128,55 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ));
+  }
+
+  void _addExpenseModalBottom(context) {
+    double height = MediaQuery.of(context).size.height;
+
+    showModalBottomSheet(
+        barrierColor: background_color.withOpacity(0.90),
+        backgroundColor: background_color,
+        context: context,
+        builder: (BuildContext bc) {
+          return Container(
+            height: height * 0.5,
+            decoration: BoxDecoration(
+              color: background_color,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.5),
+                  spreadRadius: 2,
+                  blurRadius: 10,
+                  offset: Offset(0, -5), // changes position of shadow
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: height * 0.025),
+                  child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                        width: height * 0.1,
+                        child: TextButton(
+                          style: ButtonStyle(
+                            overlayColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                          ),
+                          onPressed: () {
+                            print("Close");
+                          },
+                          child: Text("X",
+                              style: TextStyle(
+                                  color: primary_color,
+                                  fontSize: height * 0.05)),
+                        ),
+                      )),
+                ),
+              ],
+            ),
+          );
+        });
   }
 }
