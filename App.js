@@ -1,112 +1,123 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React from 'react';
-import type {Node} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
   Text,
-  useColorScheme,
+  SafeAreaView,
+  StyleSheet,
   View,
+  TouchableOpacity,
+  Button,
 } from 'react-native';
+import type {Node} from 'react';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
 
 const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  const [count, setCount] = useState(0);
+  const [savingsGoal, setSavingsGoal] = useState(0);
 
+  useEffect(() => {    
+    setCount(1500.70);
+    setSavingsGoal(5000.00);
+  });
+
+  const addExpenditure = () => {
+    
+  } 
+  
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+    <SafeAreaView style={styles.app}>
+      <View style={styles.balanceSection}>
+        <Text style={styles.balanceText}>Current Saving</Text>
+        <Text style={styles.currentBalance}>RM{count.toFixed(2)}</Text>
+        <Text style={styles.savingsText}>Savings Goal</Text>
+        <Text style={styles.savingsGoal}>RM{savingsGoal.toFixed(2)}</Text>
+      </View>
+      <View style={styles.expenditureSection}>
+          <View
+            style={[
+              styles.box,
+              {
+                flexBasis: 'auto',
+                flexGrow: 1,
+                flexShrink: 0,
+              },
+            ]}>
+              <Text style={{
+                    paddingTop: 10,
+                    color: '#b4b5b9',
+                    fontSize: 20,
+                    fontFamily: 'MyriadPro-Regular',
+              }}>Recent Expenditure</Text>
+          </View>
+          <View
+            style={[
+              styles.box,
+              {
+                flexBasis: 50,
+                flexGrow: 0,
+                flexShrink: 1,
+              },
+            ]}
+          >
+          <TouchableOpacity onPress={addExpenditure()} style={styles.appButtonContainer}>
+            <Text style={styles.appButtonText}>+</Text>
+          </TouchableOpacity>
+          </View>
         </View>
-      </ScrollView>
+      
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  app: {
+    height: '100%',
+    backgroundColor: '#071e3d',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  balanceSection: {
+    padding: 20,
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  balanceText: {
+    color: '#b4b5b9',
+    fontSize: 20,
+    fontFamily: 'MyriadPro-Regular',
   },
-  highlight: {
-    fontWeight: '700',
+  currentBalance: {
+    color: '#21e6c1',
+    fontSize: 45,
+    fontFamily: 'MyriadPro-Regular',
   },
+  savingsText: {
+    color: '#0b3164',
+    fontSize: 20,
+    fontFamily: 'MyriadPro-Regular',
+  },
+  savingsGoal: {
+    color: '#0b3164',
+    fontSize: 25,
+    fontFamily: 'MyriadPro-Regular',
+  },
+  expenditureSection: {
+    borderTopColor: '#0b3164',
+    borderTopWidth: 1,
+    height: '20%',
+    padding: 20,
+    alignSelf: "center",
+    flexDirection: "row",
+  },
+  appButtonContainer: {
+    backgroundColor: "#009688",
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 5,
+  },
+  appButtonText: {
+    fontSize: 20,
+    color: "#fff",
+    fontWeight: "bold",
+    alignSelf: "center",
+    textTransform: "uppercase"
+  }
 });
 
 export default App;
