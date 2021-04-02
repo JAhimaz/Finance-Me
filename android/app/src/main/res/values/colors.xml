@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<resources>
-    <color name="background_color">#071e3d</color>
-    <color name="primary_color">#21e6c1</color>
-    <color name="secondary_color">#b4b5b9</color>
-    <color name="plain_text_color">#b4b5b9</color>
-    <color name="sub_color">#0b3164</color>
-    <color name="negative_color">#d53f58</color>
-</resources>
